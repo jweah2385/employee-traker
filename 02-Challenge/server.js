@@ -22,7 +22,7 @@ let questions = () => {
         'Add Roles',
         'View All Departments',
         'Add Department',
-        'Update an Employee Role'
+        'Update an Employee Role',
       ],
     })
     .then((data) => {
@@ -102,115 +102,115 @@ let questions = () => {
           }
         );
       } else if (ourValue.replace(/"/g, '') == 'Add Department') {
-        const departmentInput = inquirer.prompt(
-          {
+        const departmentInput = inquirer
+          .prompt({
             type: 'input',
             name: 'addDepartment',
-            message: 'Enter the name of the department'
-          },
-        ).then((data) => {
-         departmentName = data.addDepartment;
-         db.query(`INSERT INTO department (name)
+            message: 'Enter the name of the department',
+          })
+          .then((data) => {
+            departmentName = data.addDepartment;
+            db.query(
+              `INSERT INTO department (name)
          VALUES ('${departmentName}');
-         `, (error, results) => {
-         })
-         questions();
-        })
-
+         `,
+              (error, results) => {}
+            );
+            questions();
+          });
       } else if (ourValue.replace(/"/g, '') == 'Add Roles') {
-        const departmentInput = inquirer.prompt([
-          {
-            type: 'input',
-            name: 'addRoleName',
-            message: 'Enter the role name'
-          },
-        {
-          type: 'input',
-          name: 'addSalary',
-          message: 'Enter the salary'
-        },
-      {
-        type: 'list',
-        name: 'addDepartment',
-        message: 'Enter a department name by choising a number',
-        choices: [
-          '1 For Sales',
-          '2 Engineering',
-          '3 Finance',
-          '4 Legal'
-        ]
-      }]
-        ).then((data) => {
-          let role = data.addRoleName;
-         let departmentName = data.addDepartment;
-          let salary = data.addSalary;
-          if(departmentName == '1 For Sales'){
-            departmentName = '1';
-          } else if (departmentName == '2 Engineering'){
-            departmentName = '2'
-          } else if (departmentName == '3 Finance') {
-            departmentName = '3'
-          } else (departmentName == '4 Legal')
-          // console.log(role, departmentName, salary);
-          // console.log(departmentName);
-         db.query(`INSERT INTO role (title, salary, department_id)
+        const departmentInput = inquirer
+          .prompt([
+            {
+              type: 'input',
+              name: 'addRoleName',
+              message: 'Enter the role name',
+            },
+            {
+              type: 'input',
+              name: 'addSalary',
+              message: 'Enter the salary',
+            },
+            {
+              type: 'list',
+              name: 'addDepartment',
+              message: 'Enter a department name by choising a number',
+              choices: ['1 For Sales', '2 Engineering', '3 Finance', '4 Legal'],
+            },
+          ])
+          .then((data) => {
+            let role = data.addRoleName;
+            let departmentName = data.addDepartment;
+            let salary = data.addSalary;
+            if (departmentName == '1 For Sales') {
+              departmentName = '1';
+            } else if (departmentName == '2 Engineering') {
+              departmentName = '2';
+            } else if (departmentName == '3 Finance') {
+              departmentName = '3';
+            } else departmentName == '4 Legal';
+            // console.log(role, departmentName, salary);
+            // console.log(departmentName);
+            db.query(
+              `INSERT INTO role (title, salary, department_id)
          VALUES ('${role}', '${salary}', '${departmentName}');
-         `, (error, results) => {
-         })
-         questions();
-        })
-
+         `,
+              (error, results) => {}
+            );
+            questions();
+          });
       } else if (ourValue.replace(/"/g, '') == 'Add Employee') {
-        const departmentInput = inquirer.prompt([
-          {
-            type: 'input',
-            name: 'firstName',
-            message: 'Enter the first name'
-          },
-        {
-          type: 'input',
-          name: 'lastName',
-          message: 'Enter the last name'
-        },
-      {
-        type: 'list',
-        name: 'role',
-        message: 'Select the role',
-        choices: [
-          // 'Sales Manager',
-          // 'Lead Engineer',
-          // 'Software Engineer',
-          // 'Account Manager',
-          '1',
-          '2',
-          '3',
-          '4'
-        ]  
-      },
-    {
-      type: 'list',
-      name: 'manager_id',
-      choices: [
-        '1',
-        '2',
-        '3',
-        '4'
-      ]
-    }]
-        ).then((data) => {
-          let role = Number(data.role);
-          let first_name = data.firstName;
-          let last_name = data.lastName;
-          let manager = Number(data.manager_id);
-          
-          console.log(role, first_name, last_name, manager);
-         db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
-         VALUES ('${first_name}', '${last_name}', ${role}, ${manager})`, (error, results) => {
-         })
-         questions();
-        })
-      } else if (ourValue.replace(/"/g, '') == 'Update an Employee Role') {
+        const departmentInput = inquirer
+          .prompt([
+            {
+              type: 'input',
+              name: 'firstName',
+              message: 'Enter the first name',
+            },
+            {
+              type: 'input',
+              name: 'lastName',
+              message: 'Enter the last name',
+            },
+            {
+              type: 'list',
+              name: 'role',
+              message: 'Select the role',
+              choices: [
+                // 'Sales Manager',
+                // 'Lead Engineer',
+                // 'Software Engineer',
+                // 'Account Manager',
+                '1',
+                '2',
+                '3',
+                '4',
+              ],
+            },
+            {
+              type: 'list',
+              name: 'manager_id',
+              choices: ['1', '2', '3', '4'],
+            },
+          ])
+          .then((data) => {
+            let role = Number(data.role);
+            let first_name = data.firstName;
+            let last_name = data.lastName;
+            let manager = Number(data.manager_id);
 
+            console.log(role, first_name, last_name, manager);
+            db.query(
+              `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+         VALUES ('${first_name}', '${last_name}', ${role}, ${manager})`,
+              (error, results) => {}
+            );
+            questions();
+          });
+      } else if (ourValue.replace(/"/g, '') == 'Update an Employee Role') {
+        let updatedRoleID = 0;
+        let updatedEmployeeID = 0;
+       
         function getRoles() {
           return new Promise((resolve, reject) => {
             db.query('SELECT id, title FROM role', (error, results) => {
@@ -219,14 +219,14 @@ let questions = () => {
               } else {
                 const roles = results.map((row) => ({
                   name: row.title,
-                  value: row.id
+                  value: row.id,
                 }));
                 resolve(roles);
               }
             });
           });
         }
-        
+
         // Function to prompt the user to select a role
         async function selectRole() {
           try {
@@ -234,22 +234,69 @@ let questions = () => {
             const roleChoice = await inquirer.prompt({
               type: 'list',
               name: 'selectedRole',
-              message: 'Select a role for the employee:',
-              choices: roles
+              message: 'Select the new role for the employee:',
+              choices: roles,
             });
-        
-            // The selected role ID will be available as roleChoice.selectedRole
+
             console.log('Selected role ID:', roleChoice.selectedRole);
-        
-            // You can now use this role ID to insert it into the employee record in your database.
-            // Add your database insert code here.
+            updatedRoleID = roleChoice.selectedRole;
+            
+        // Function to retrieve a list of employees from the database
+        function getEmployees() {
+          return new Promise((resolve, reject) => {
+            db.query(
+              'SELECT id, first_name, last_name FROM employee',
+              (error, results) => {
+                if (error) {
+                  reject(error);
+                } else {
+                  const employees = results.map((row) => ({
+                    name: `${row.first_name} ${row.last_name}`,
+                    value: row.id,
+                  }));
+                  resolve(employees);
+                }
+              }
+            );
+          });
+        }
+
+        selectEmployee();
+        // Function to prompt the user to select an employee
+        async function selectEmployee() {
+          try {
+            const employees = await getEmployees();
+            const employeeChoice = await inquirer.prompt({
+              type: 'list',
+              name: 'selectedEmployee',
+              message: 'Select an employee:',
+              choices: employees,
+            });
+            updatedEmployeeID = employeeChoice.selectedEmployee;
+            console.log(updatedEmployeeID, updatedRoleID)
+            db.query(`UPDATE employee
+            SET role_id = ${updatedRoleID}
+            WHERE id = ${updatedEmployeeID};
+            `, (error, result) => {
+              console.error(
+                'Error', error
+              )
+            })
+          } catch (error) {
+            console.error('Error:', error);
+          }
+          questions();
+        }
+
+            db.query(``, (error, result) => {});
+           return roleChoice;
           } catch (error) {
             console.error('Error:', error);
           }
         }
         
-       selectRole();
-
+        // Call the selectEmployee function to prompt the user to select an employee
+      selectRole();
       }
       return ourValue;
     })
