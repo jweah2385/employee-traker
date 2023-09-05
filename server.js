@@ -33,14 +33,14 @@ let questions = () => {
 
         db.query('SELECT id, name FROM department', (error, results) => {
           if (error) throw error;
-
+         
           console.log(`id  department `);
           console.log(`--  ----------`);
           results.forEach((department) => {
+            console.log();
             console.log(`${department.id}   ${department.name}`);
           });
           questions();
-          // process.exit(0);
         });
       } else if (ourValue.replace(/"/g, '') == 'View All Roles') {
         db.query(
@@ -59,10 +59,11 @@ let questions = () => {
 
             for (const row of results) {
               const columns = ['Title', 'ID', 'Department', 'Salary'];
+              console.log('')
               console.log(
+                
                 `${row.title}, ${row.id}, ${row.name}, ${row.salary}`
               )
-
             }
             questions();
           }
@@ -83,6 +84,7 @@ let questions = () => {
             if (error) throw error;
             const row = [];
             for (const row of results) {
+              console.log('')
               console.log(
                 `${row.id}, ${row.first_name}, ${row.last_name}, ${row.title}`
               );
@@ -124,22 +126,22 @@ let questions = () => {
               type: 'list',
               name: 'addDepartment',
               message: 'Enter a department name by choising a number',
-              choices: ['1 For Sales', '2 Engineering', '3 Finance', '4 Legal'],
+              choices: ['1 Sales', '2 Engineering', '3 Human Resources', '4 Legal', 'Other'],
             },
           ])
           .then((data) => {
             let role = data.addRoleName;
             let departmentName = data.addDepartment;
             let salary = data.addSalary;
-            if (departmentName == '1 For Sales') {
+            if (departmentName == '1 Sales') {
               departmentName = '1';
             } else if (departmentName == '2 Engineering') {
               departmentName = '2';
-            } else if (departmentName == '3 Finance') {
+            } else if (departmentName == '3 Human Resources') {
               departmentName = '3';
-            } else departmentName == '4 Legal';
-            // console.log(role, departmentName, salary);
-            // console.log(departmentName);
+            } else if (departmentName == '4 Legal') {
+              departmentName = '4'
+            } else departmentName = '5'
             db.query(
               `INSERT INTO role (title, salary, department_id)
          VALUES ('${role}', '${salary}', '${departmentName}');
@@ -300,5 +302,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  // console.log(`Server running on port ${PORT}`);
 });

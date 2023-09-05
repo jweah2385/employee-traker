@@ -27,7 +27,7 @@ This project is licensed under the MIT License.
 
 ## Preview
 
-![This is a preview of the application]()
+![This is a preview of the application](/Assets/Screenshot%202023-09-05%20at%201.48.35%20PM.png)
 
 
 ## Installation
