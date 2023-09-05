@@ -56,25 +56,15 @@ let questions = () => {
           (error, results) => {
             if (error) throw error;
 
-            // for (const row of results) {
-            //   const columns = ["Title", "ID", "Department", "Salary"];
-            //   console.log('title        id          name          salary')
-            //   console.log(`${row.title},   ${row.id},   ${row.name}, ${row.salary}`)
-            // }
-
             const data = [];
 
             for (const row of results) {
               const columns = ['Title', 'ID', 'Department', 'Salary'];
+              console.log(
+                `${row.title}, ${row.id}, ${row.name}, ${row.salary}`
+              )
 
-              console.log(`
-                ${columns[0]}: ${row.title},
-                ${columns[1]}: ${row.id},
-                ${columns[2]}: ${row.name},
-                ${columns[3]}: ${row.salary}
-              `);
             }
-
             questions();
           }
         );
@@ -177,20 +167,16 @@ let questions = () => {
               name: 'role',
               message: 'Select the role',
               choices: [
-                // 'Sales Manager',
-                // 'Lead Engineer',
-                // 'Software Engineer',
-                // 'Account Manager',
-                '1',
-                '2',
-                '3',
-                '4',
+                'Sales',
+                'Marketing',
+                'Sowftware',
+                'Accountant',
               ],
             },
             {
               type: 'list',
               name: 'manager_id',
-              choices: ['1', '2', '3', '4'],
+              choices: ['1 ', '2', '3', '4'],
             },
           ])
           .then((data) => {
@@ -199,7 +185,16 @@ let questions = () => {
             let last_name = data.lastName;
             let manager = Number(data.manager_id);
 
-            console.log(role, first_name, last_name, manager);
+            if (data.role == 'Sales') {
+              role = 1;
+            } else if (data.role == 'Marketing') {
+              role = 2;
+            } else if (data.role == 'Sowftware') {
+              role = 3;
+            } else if (data.role == 'Accountant') {
+              role = 4;
+            }
+
             db.query(
               `INSERT INTO employee (first_name, last_name, role_id, manager_id)
          VALUES ('${first_name}', '${last_name}', ${role}, ${manager})`,
@@ -237,8 +232,6 @@ let questions = () => {
               message: 'Select the new role for the employee:',
               choices: roles,
             });
-
-            console.log('Selected role ID:', roleChoice.selectedRole);
             updatedRoleID = roleChoice.selectedRole;
             
         // Function to retrieve a list of employees from the database
@@ -273,7 +266,6 @@ let questions = () => {
               choices: employees,
             });
             updatedEmployeeID = employeeChoice.selectedEmployee;
-            console.log(updatedEmployeeID, updatedRoleID)
             db.query(`UPDATE employee
             SET role_id = ${updatedRoleID}
             WHERE id = ${updatedEmployeeID};
@@ -289,16 +281,14 @@ let questions = () => {
         }
 
             db.query(``, (error, result) => {});
-           return roleChoice;
+           
           } catch (error) {
             console.error('Error:', error);
           }
         }
-        
-        // Call the selectEmployee function to prompt the user to select an employee
-      selectRole();
+ selectRole();
       }
-      return ourValue;
+      
     })
     .catch((error) => {
       console.log(error);

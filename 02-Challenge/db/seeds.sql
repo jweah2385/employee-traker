@@ -8,10 +8,10 @@ VALUES (1,"Sales"),
         
 INSERT INTO role (id, title, salary, department_id)
 VALUES 
-    (1, "Sales Manager", 130040.0, 1),
-    (2, "Lead ", 140000.0, 2),
-    (3, "Software Manager", 120000.0, 3),
-    (4, "Account Manager", 160000.0, 4);
+    (1, "Sales", 130040.0, 1),
+    (2, "Marketing", 140000.0, 2),
+    (3, "Software", 120000.0, 3),
+    (4, "Accountant", 160000.0, 4);
  
 
 
